@@ -9,6 +9,12 @@ The goal of this project is to increase knowledge in the following topics and to
     * OAUTH
     * JWT
 * [GraphQL](https://graphql.org/)
+* MongoDB
+* Node.js
+* React
+* React JS
+* React Native
+* Paralelism
 
 The Meds at Home is an application that allows anyone to control the medicines they currently have at home. The idea comes from the times when I had to take my daughter to the pediatrician and left the doctors' office with a list of medicines to give to her. From the doctors' office straight to the drugstore to buy all the medicines needed.
 

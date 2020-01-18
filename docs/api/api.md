@@ -25,13 +25,16 @@ These are the allowed HTTP methods used:
 
 ## Best Practices When Developing an API
 
-* An API should use the resource name in the plural form (contacts, medicines, ...)
-* Use human readable URIs
-* Separate words in URIs using a dash (-)
-* Do not add the operation in the URI like /create or /update
+* An API should use the resource name in the plural form (contacts, medicines, ...).
+* Use human readable URIs.
+* Separate words in URIs using hyphens (-).
+* Use lowercase letters.
+* Do not add the operation in the URI like /create or /update.
 * Do no change the existing URIs format to avoid breaking existing clients. Create a new API version to to so.
 * For URIs that manipulates one resource, add the resource identifier at the end of the URI.
-* Use the apropriate response codes in the responses
+* Use query parameters to filter URI collection (?q=text)
+* Do not use a a forward slash (/) as the last character in a URI.
+* Use the apropriate response codes in the responses:
     * 2xx - request processed successfully
     * 3xx - an action should be taken to process the request successfully
     * 4xx - errors on the client side
@@ -44,65 +47,13 @@ Checkout a list of common response status code [here](./responseStatusCodes.md)
 
 The API for this project must provide endpoints to:
 
-* Create a new account
+* Register a new user account
 * Authenticate the user into the application
 * Update existing account details
 * Add a new medicine to the list
 * Update existing medicine details
 * Remove a medicine from the list
 
-## Open Endpoint
+# OAS - Open API Specification
 
-These requires no authentication
-
-* [Sign up](./signup.md)
-* [Sign in]((./signin.md))
-
-
-## Endpoints that requires authentication
-
-* [List the medicines](./listMedicines.md)
-* [Add a new medicine to the list](./createMedicine.md)
-* [Update an existing medicine](./updateMedicine.md)
-* [Remove a medicine from the list](./deleteMedicine.md)
-
-
-
-
-### Add a new medicine to the list
-**POST /medicines**
-
-    Payload
-    {
-        name: "string"
-        expire_date: "string"
-        type: "string"
-        quantity: "string"
-    }
-
-
-
-###  Update an existing medicine
-**PATCH /medicines/{id}**
-
-    URL parameters
-    {
-        id: "string" - the medicine ID
-    }
-
-    Payload (any of the following)
-    {
-        name: "string"
-        expire_date: "string"
-        type: "string
-    }
-
-
-### Delete an existing medicine
-**DELETE /medicines/{id}**
-
-    URL parameters
-    {
-        id: "string" - the medicine ID
-    }
-
+The complete documentation, including specification, can be found [here](https://app.swaggerhub.com/apis/marqu3s/medsathome/1.0.0)
