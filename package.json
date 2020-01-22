@@ -1,8 +1,0 @@
-{
-  "name": "meds-at-home-api-nodejs",
-  "version": "1.0.0",
-  "description": "API for meds at home",
-  "main": "index.js",
-  "author": "Joao Marques",
-  "license": "MIT"
-}

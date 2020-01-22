@@ -2,15 +2,20 @@
 
 This is a project for learning purposes.
 
-The goal of this project is to increase knowledge in the following topics and tools:
-* [RESTFul APIs](https://restfulapi.net/)
-    * [OpenAPI Specification (OAS)](https://swagger.io/resources/open-api/)
-    * [Swagger](https://swagger.io/)
+The goal of this project is to increase knowledge in the following topics and
+tools:
+
+* [ESLint](https://eslint.org)
+* [RESTFul APIs](https://restfulapi.net)
+    * [OpenAPI Specification (OAS)](https://swagger.io/resources/open-api)
+    * [Swagger](https://swagger.io)
     * OAUTH
     * JWT
-* [GraphQL](https://graphql.org/)
+* [GraphQL](https://graphql.org)
 * MongoDB
 * Node.js
+* [nodemon](https://nodemon.io)
+* [Sucrase](https://sucrase.io)
 * React
 * React JS
 * React Native
@@ -54,4 +59,147 @@ This project is divided into 3 sub-projects:
 
     See API details [here](./docs/api/api.md).
 
-    
+# Development environment configuration
+
+[Yarn](https://yarnpkg.com) was used as the package manager.
+
+```
+yarn init
+```
+
+## VSCode
+
+The follwing plugins are being used:
+* ESLint by Dirk Baeumer
+* Prettier by Esben Petersen
+
+## ESLint
+
+```
+yarn add --dev eslint
+yarn eslint --init
+```
+
+Choose the options for nodejs development and Airbnb style guide. Then delete the `package-lock.json`  and just run `yarn` to install the dependencies that were installed by `npm`.
+
+Add the following lines to the VSCode settings.json file:
+
+```json
+"eslint.format.enable": true,
+"editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+},
+"eslint.validate": [
+    "html",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+]
+```
+
+Let's customize some linting rules in `.eslintrc.js`:
+
+```json
+rules: {
+    // ignore unused next vars
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "next"
+      }
+    ]
+}
+```
+
+## Prettier
+
+```
+yarn add --dev prettier eslint-config-prettier eslint-plugin-prettier
+```
+
+Then edit `.eslintrc.js` file:
+
+```diff
+-- extends: ['airbnb-base'],
+++ extends: ['airbnb-base', 'prettier'],
+++ plugins: ['prettier'],
+rules: {
+++  "prettier/prettier": "error",
+}
+```
+
+
+```js
+module.exports = {
+  env: {
+    es6: true,
+    node: true,
+  },
+  extends: [
+    'airbnb-base',
+    'prettier'
+  ],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  plugins: ['prettier'],
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  rules: {
+    "prettier/prettier": 'error'
+  },
+};
+```
+
+This way the code formating will be made only by prettier.
+
+## Sucrase & Nodemon
+
+```
+yarn add --dev sucrase nodemon
+```
+
+Then edit `package.json` ...
+
+```diff
+++ "scripts": {
+++    "dev": "nodemon src/index.js",
+++    "dev:debug": "nodemon --inspect  src/index.js"
+++  }
+```
+
+and create a file named `nodemon.json` on the root folder:
+
+```json
+{
+    "execMap": {
+        "js": "node -r sucrase/register"
+    }
+}
+```
+
+To debug applications, create a new configuration for nodejs.
+
+```json
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "protocol": "inspector"
+        }
+    ]
+}
+```
