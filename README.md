@@ -4,16 +4,16 @@ This is a project for learning purposes.
 
 The goal of this project is to increase knowledge in the following topics and
 tools:
-
 * [ESLint](https://eslint.org)
 * [RESTFul APIs](https://restfulapi.net)
     * [OpenAPI Specification (OAS)](https://swagger.io/resources/open-api)
     * [Swagger](https://swagger.io)
     * OAUTH
-    * JWT
+    * [JWT](https://jwt.io)
 * [GraphQL](https://graphql.org)
-* MongoDB
-* Node.js
+* [MongoDB](https://www.mongodb.com) mah / PsY0hv6YroGf1Oo4
+* [Mongoose](https://mongoosejs.com)
+* [Node.js](https://nodejs.org)
 * [nodemon](https://nodemon.io)
 * [Sucrase](https://sucrase.io)
 * React
@@ -202,4 +202,28 @@ To debug applications, create a new configuration for nodejs.
         }
     ]
 }
+```
+
+## MongoDB & Mongoose
+
+```
+yarn add mongoose
+```
+
+[Mongoose guide](https://mongoosejs.com/docs/index.html)
+
+## Bcrypt
+
+Used to encrypt and decrypt passwords
+
+```
+yarn add bcryptjs
+```
+
+## JWT
+
+JWT = Json Web Token
+
+```
+yarn add jsonwebtoken
 ```

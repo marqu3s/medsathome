@@ -6,6 +6,9 @@
   "author": "Joao Marques",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.9",
     "restify": "^8.5.1",
     "restify-router-config": "^1.2.0-alpha.0"
   },

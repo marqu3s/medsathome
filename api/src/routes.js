@@ -1,4 +1,4 @@
-import register from "./controllers/account";
+import { register, auth } from "./app/controllers/account";
 
 const routes = [
   {
@@ -8,6 +8,11 @@ const routes = [
         match: "/register",
         method: "post",
         action: register
+      },
+      {
+        match: "/auth",
+        method: "post",
+        action: auth
       }
     ]
   },
