@@ -1,4 +1,4 @@
-import { register, auth } from "./app/controllers/account";
+import AccountController from "./app/controllers/AccountController";
 
 const routes = [
   {
@@ -7,12 +7,12 @@ const routes = [
       {
         match: "/register",
         method: "post",
-        action: register
+        action: AccountController.register
       },
       {
         match: "/auth",
         method: "post",
-        action: auth
+        action: AccountController.auth
       }
     ]
   },
