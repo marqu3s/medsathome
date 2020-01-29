@@ -1,4 +1,7 @@
 import AccountController from "./app/controllers/AccountController";
+import MedicineController from "./app/controllers/MedicineController";
+
+import restrictedRoute from "./app/middlewares/restrictedRoute";
 
 const routes = [
   {
@@ -13,6 +16,22 @@ const routes = [
         match: "/auth",
         method: "post",
         action: AccountController.auth
+      }
+    ]
+  },
+  {
+    group: "medicines",
+    middleware: restrictedRoute,
+    routes: [
+      {
+        match: "/",
+        method: "get",
+        action: MedicineController.list
+      },
+      {
+        match: "/",
+        method: "post",
+        action: MedicineController.store
       }
     ]
   },

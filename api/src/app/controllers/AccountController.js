@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import "../../database/index";
+import authConfig from "../../config/auth";
 import Account from "../models/Account";
 
 class AccountController {
@@ -22,11 +23,9 @@ class AccountController {
    * @returns string
    */
   static generateToken(accountId) {
-    return jwt.sign(
-      { id: accountId },
-      "235f60dd11c19aed8fb63f61c5e485d42e365678",
-      { expiresIn: "7d" }
-    );
+    return jwt.sign({ id: accountId }, authConfig.secret, {
+      expiresIn: authConfig.expiresIn
+    });
   }
 
   /**
@@ -58,6 +57,8 @@ class AccountController {
       // Saved!
       const token = AccountController.generateToken(newModel.id);
       res.send(200, { auth: true, token });
+
+      return next();
     });
   }
 
@@ -92,6 +93,8 @@ class AccountController {
       // Authorized!
       const token = AccountController.generateToken(account.id);
       res.send(200, { auth: true, token });
+
+      return next();
     });
   }
 }

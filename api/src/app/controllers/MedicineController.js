@@ -1,0 +1,68 @@
+import Medicine from "../models/Medicine";
+
+class MedicineController {
+  /**
+   * Returns a list of medicines for a user.
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   */
+  list(req, res, next) {
+    let { search, limit, offset } = req.query;
+    search = search || "";
+    limit = limit || 10;
+    offset = offset || 0;
+
+    // Number of records to skip (pagination).
+    const skip = offset * limit;
+
+    const filter = { createdBy: req.userId };
+
+    if (search !== "") {
+      filter.name = new RegExp(search, "i");
+    }
+
+    // Find the user's medicines. Hide the createdBy attribute.
+    Medicine.find(filter, { createdBy: 0 }, { skip }, function(err, medicines) {
+      if (err) {
+        const { message } = err;
+        res.send(400, { message });
+      }
+
+      res.send(medicines);
+    });
+
+    return next();
+  }
+
+  /**
+   * Store a new medicine in the users list.
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   */
+  store(req, res, next) {
+    const { body, userId } = req;
+
+    body.createdBy = userId;
+    const medicine = new Medicine(body);
+    medicine.save(function(err, newMedicine) {
+      if (err) {
+        const { message } = err;
+        // if (err.message.indexOf("duplicate key error") !== -1) {
+        //   message = "The email provided is already in use.";
+        // }
+        res.send(400, { message });
+      }
+
+      // Saved!
+      // Remove some keys and send the document as the response.
+      const { createdBy, ...responseModel } = newMedicine._doc;
+      res.send(responseModel);
+
+      return next();
+    });
+  }
+}
+
+export default new MedicineController();
