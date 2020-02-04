@@ -10,6 +10,7 @@ class MedicineController {
    * @param {*} next
    */
   list(req, res, next) {
+    const { userId } = req;
     let { search, limit, offset } = req.query;
     search = search || "";
     limit = limit || 10;
@@ -18,7 +19,7 @@ class MedicineController {
     // Number of records to skip (pagination).
     const skip = offset * limit;
 
-    const filter = { createdBy: req.userId };
+    const filter = { createdBy: userId };
 
     if (search !== "") {
       filter.name = new RegExp(search, "i");
