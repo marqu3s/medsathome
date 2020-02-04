@@ -32,6 +32,16 @@ const routes = [
         match: "/",
         method: "post",
         action: MedicineController.store
+      },
+      {
+        match: "/:medicineId",
+        method: "patch",
+        action: MedicineController.update
+      },
+      {
+        match: "/:medicineId",
+        method: "del",
+        action: MedicineController.delete
       }
     ]
   },

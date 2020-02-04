@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 import Medicine from "../models/Medicine";
 
 class MedicineController {
@@ -59,6 +61,75 @@ class MedicineController {
       // Remove some keys and send the document as the response.
       const { createdBy, ...responseModel } = newMedicine._doc;
       res.send(responseModel);
+
+      return next();
+    });
+  }
+
+  /**
+   * Updates a medicine.
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   */
+  update(req, res, next) {
+    const { body, userId } = req;
+    const { medicineId } = req.params;
+
+    Medicine.findById(medicineId, (err, medicine) => {
+      if (err) {
+        const { message } = err;
+        res.send(400, { message });
+      }
+
+      // Check if the user is the owner of the medicine.
+      const id1 = mongoose.Types.ObjectId(userId);
+      const id2 = mongoose.Types.ObjectId(medicine.createdBy);
+      if (!id1.equals(id2)) {
+        return res.send(403, "You can't edit this medicine.");
+      }
+
+      // Update the medicine properties with the ones that were sent.
+      for (const i in body) {
+        medicine[i] = body[i];
+      }
+
+      // Save the model with the new values.
+      medicine.save(() => {
+        return res.send(200);
+      });
+
+      return next();
+    });
+  }
+
+  /**
+   * Deletes a medicine from the list.
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   */
+  delete(req, res, next) {
+    const { userId } = req;
+    const { medicineId } = req.params;
+
+    Medicine.findById(medicineId, (err, medicine) => {
+      if (err) {
+        const { message } = err;
+        res.send(400, { message });
+      }
+
+      // Check if the user is the owner of the medicine.
+      const id1 = mongoose.Types.ObjectId(userId);
+      const id2 = mongoose.Types.ObjectId(medicine.createdBy);
+      if (!id1.equals(id2)) {
+        return res.send(403, "You can't delete this medicine.");
+      }
+
+      // Delete the model.
+      Medicine.deleteOne({ _id: medicineId }, () => {
+        return res.send(200);
+      });
 
       return next();
     });
